@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function Player({ initialName, symbol }) {
+export default function Player({ initialName, symbol, activePlayer }) {
     const [isEditing, setIsEditing] = useState(false);
     const [playerName, setPlayerName] = useState(initialName);
     const clickHandler = () => {
@@ -9,7 +9,7 @@ export default function Player({ initialName, symbol }) {
     const changeHandler = (event) => {
         setPlayerName(event.target.value)
     }
-    return <li>
+    return <li className={activePlayer ? 'active' : undefined}>
         <span className="player">
             {isEditing ? <input type="text" required value={playerName} onChange={changeHandler} /> : <span className="player-name">{playerName}</span>}
             <span className="player-symbol">{symbol}</span>

@@ -6,16 +6,17 @@ const initialGameBoard = [
     [null, null, null]
 ];
 
-const GameBoard = () => {
+const GameBoard = ({ onSelectActive, activePlayerSymbol }) => {
     const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
     const onClickBoardHandler = (rowIndex, colIndex) => {
         setGameBoard((preGameBoard) => {
             const updateBoard = [...preGameBoard.map(innerArray => [...innerArray])];
-            updateBoard[rowIndex][colIndex] = 'X';
+            updateBoard[rowIndex][colIndex] = activePlayerSymbol;
             return updateBoard;
         }
         )
+        onSelectActive();
     }
 
     return <ol id="game-board">
