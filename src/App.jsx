@@ -3,17 +3,24 @@ import GameBoard from "./components/GameBoard"
 import Player from "./components/Player"
 import Log from "./components/Log";
 
+function derivedActivePlayer(gameTurn) {
+  let currentPlayer = 'X';
+  if (gameTurn.length > 0 && gameTurn[0].player === 'X') {
+    currentPlayer = 'O';
+  }
+  return currentPlayer;
+}
+
 function App() {
   const [gameTurns, setGameTurns] = useState([]);
-  const [activePlayer, setActivePalyer] = useState('X');
+  // const [activePlayer, setActivePalyer] = useState('X');
+
+  const activePlayer = derivedActivePlayer(gameTurns);
 
   const onHandleActive = (rowIndex, colIndex) => {
-    setActivePalyer((activePlayer) => activePlayer === 'X' ? 'O' : 'X');
+    // setActivePalyer((activePlayer) => activePlayer === 'X' ? 'O' : 'X');
     setGameTurns((preTurns) => {
-      let currentPlayer = 'X';
-      if (preTurns.length > 0 && preTurns[0].player === 'X') {
-        currentPlayer = 'O';
-      }
+      const currentPlayer = derivedActivePlayer(preTurns);
       const updated = [{ square: { row: rowIndex, col: colIndex }, player: currentPlayer }, ...preTurns];
       return updated;
     })
@@ -27,7 +34,7 @@ function App() {
       </ol>
       <GameBoard onSelectActive={onHandleActive} turns={gameTurns} />
     </div >
-    <Log />
+    <Log turns={gameTurns} />
   </main >
   )
 }
